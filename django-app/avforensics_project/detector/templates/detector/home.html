@@ -1,0 +1,328 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Audio-Visual Forensics</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Full‐page loading overlay (hidden by default) -->
+    <div id="loading-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="page-container">
+      <h1>Upload Video For Analysis</h1>
+
+      <div class="card upload-card">
+        <form id="upload-form" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" id="analyze-button" class="btn">Analyze Video</button>
+        </form>
+      </div>
+
+      <!-- Video preview (hidden until a file is chosen) -->
+      <div id="preview-container" class="card preview-card hidden">
+        <h2>Video Preview</h2>
+        <video id="video-preview" width="480" controls>
+          <!-- source is set by JS -->
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Result block: only shown after server returns `result` in context -->
+      {% if result %}
+      <div class="card result-card">
+        <h2>Result: {{ result }}</h2>
+        <p class="score_read">Score: {{ score }}</p>
+
+
+        {% if filename %}
+        <div class="server-video-container">
+          <h3>Analyzed Video</h3>
+          <video width="480" controls class="video-player">
+            <source src="{{ MEDIA_URL }}{{ filename }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+<!--           
+          <h3>Extracted Faces:</h3>
+          {% for img_path in face_images %}
+            <img src="/{{ img_path }}" width="160" style="margin:10px;">
+          {% endfor %} -->
+          {% if face_images %}
+          <h3>Extracted Faces:</h3>
+          <div class="extracted-faces">
+            {% for img in face_images %}
+              <img src="/{{ img }}"
+                  alt="Face crop {{ forloop.counter }}"
+                  class="face-crop" />
+            {% endfor %}
+          </div>
+        {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    <script>
+      // 1) Video‐preview logic: show preview as soon as user selects a file.
+      document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.querySelector('input[type="file"]');
+        const previewContainer = document.getElementById('preview-container');
+        const videoPreview = document.getElementById('video-preview');
+
+        fileInput.addEventListener('change', function() {
+          if (fileInput.files && fileInput.files[0]) {
+            const file = fileInput.files[0];
+            const url = URL.createObjectURL(file);
+            videoPreview.src = url;
+            previewContainer.classList.remove('hidden');
+          } else {
+            previewContainer.classList.add('hidden');
+            videoPreview.removeAttribute('src');
+          }
+        });
+      });
+
+      // 2) Loading overlay logic: show overlay on form submit, hide when page reloads.
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('upload-form');
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        form.addEventListener('submit', function(e) {
+          // Show loading overlay
+          loadingOverlay.classList.add('visible');
+        });
+      });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!-- {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Audio-Visual Forensics</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="page-container">
+      <h1>Upload Video for Forensics</h1>
+      <div class="card">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn">Analyze Video</button>
+        </form>
+      </div>
+
+      {% if result %}
+      <div class="card result-card">
+        <h2>Result: {{ result }}</h2>
+        <p>Score: {{ score }}</p>
+        
+        {% if filename %}
+        <video width="480" controls class="video-player">
+          <source src="{{ MEDIA_URL }}{{ filename }}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+</body>
+</html> -->
+
+
+
+
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio-Visual Forensics</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="container">
+    <h1>Upload Video for Forensics</h1>
+    <form method="post" enctype="multipart/form-data" class="glass-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-cool">Analyze Video</button>
+    </form>
+
+    {% if result %}
+      <div class="result">
+        <h2>Result: <span>{{ result }}</span></h2>
+        <p>Score: <strong>{{ score }}</strong></p>
+        <div class="debug">
+          <h3>Debug Output</h3>
+          <pre>
+STDOUT:
+{{ raw_stdout }}
+
+STDERR:
+{{ raw_stderr }}
+          </pre>
+        </div>
+
+        {% if filename %}
+          <video class="video-preview" controls>
+            <source src="{{ MEDIA_URL }}{{ filename }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html> -->
+
+
+
+
+
+<!-- {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio-Visual Forensics</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Upload Video for Forensics</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Analyze Video</button>
+        </form>
+
+        {% if result %}
+            <div class="result">
+                <h2>Result: {{ result }}</h2>
+                <p>Score: {{ score }}</p>
+
+                <div class="debug">
+                    <h3>Debug Output</h3>
+                    <pre>STDOUT:
+    {{ raw_stdout }}
+
+    STDERR:
+    {{ raw_stderr }}</pre>
+                </div>
+
+                {% if filename %}
+                    <video width="480" controls>
+                        <source src="{{ MEDIA_URL }}{{ filename }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio-Visual Forensics</title>
+    <style>
+        html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+            text-align: center;              /* keep your centered title */
+            background-image: url("{% static 'images/bg.jpg' %}");
+            background-size: contain;          /* scale to cover viewport */
+            background-position: center;     /* center the image */
+            background-repeat: no-repeat;    /* don’t tile */
+            background-attachment: fixed;     /* optional: parallax-like effect */
+            /* Optional: dim it so text is more readable */
+            /* background-color: rgba(0,0,0,0.5); */
+            /* background-blend-mode: darken; */
+        }
+        h1 { text-align: center; } /* <-- Add this line */
+        .result { margin-top: 1em; }
+    </style>
+</head>
+<body>
+    <h1>Upload Video for Forensics</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Analyze Video</button>
+    </form>
+
+    {% if result %}
+        <div class="result">
+            <h2>Result: {{ result }}</h2>
+            <p>Score: {{ score }}</p>
+            
+        <div class="debug">
+            <h3>Debug Output</h3>
+            <pre>STDOUT:
+        {{ raw_stdout }}
+
+        STDERR:
+        {{ raw_stderr }}</pre>
+        </div>
+
+
+            {% if filename %}
+                <video width="480" controls>
+                    <source src="{{ MEDIA_URL }}{{ filename }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html> -->
+

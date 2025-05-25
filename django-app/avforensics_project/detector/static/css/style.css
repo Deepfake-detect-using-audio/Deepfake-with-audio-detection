@@ -1,0 +1,379 @@
+/* ------------------------------------------------------
+   1. Global Reset + Base Typography
+------------------------------------------------------ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ------------------------------------------------------
+   2. Soft Abstract Pastel Gradient Background
+------------------------------------------------------ */
+/* ============================
+   1. Animated gradient base
+   ============================ */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  
+  /* your animated gradient */
+  background: linear-gradient(
+    135deg,
+    #e0c9f8,
+    #cbe0fd,
+    #fdecd9,
+    #f2baff
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+}
+
+/* keyframes for shifting gradient */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ============================
+   2. Particle overlay
+   ============================ */
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particles::before,
+.particles::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: 200vmax;
+  height: 200vmax;
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,0.05) 0%,
+    transparent 70%
+  );
+  animation: driftSlow 30s infinite linear;
+  transform-origin: center;
+  z-index: 1;
+}
+
+.particles::after {
+  animation: driftSlowReverse 50s infinite linear;
+  opacity: 0.03;
+}
+
+@keyframes driftSlow {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes driftSlowReverse {
+  0%   { transform: translate(-50%, -50%) rotate(360deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+/* ============================
+   3. Blurred “blob” shapes
+   ============================ */
+.blob {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: floatBlob 12s ease-in-out infinite;
+  will-change: transform, opacity;
+  z-index: 0;
+}
+
+.blob.one {
+  width: 400px;
+  height: 400px;
+  top: 10%;
+  left: 20%;
+  animation-duration: 18s;
+}
+
+.blob.two {
+  width: 300px;
+  height: 300px;
+  top: 60%;
+  left: 75%;
+  background: rgba(255, 255, 255, 0.10);
+  animation-duration: 24s;
+}
+
+.blob.three {
+  width: 500px;
+  height: 500px;
+  top: 40%;
+  left: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  animation-duration: 30s;
+}
+
+@keyframes floatBlob {
+  0%   { transform: translate3d(0, 0, 0) scale(1);   opacity: 0.6; }
+  25%  { transform: translate3d(20px, -30px, 0) scale(1.1); opacity: 0.5; }
+  50%  { transform: translate3d(-10px, 20px, 0) scale(0.95); opacity: 0.7; }
+  75%  { transform: translate3d(30px, 10px, 0) scale(1.05); opacity: 0.55; }
+  100% { transform: translate3d(0, 0, 0) scale(1);   opacity: 0.6; }
+}
+
+/* ============================
+   4. Content sits on top
+   ============================ */
+.content {
+  position: relative;
+  z-index: 2;
+  color: #222;
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.content h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5em;
+}
+
+.content p {
+  font-size: 1.2rem;
+}
+
+
+
+/* ------------------------------------------------------
+   3. Page Container
+------------------------------------------------------ */
+.page-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* ------------------------------------------------------
+   4. Frosted‐Glass Card Base Styles (lighter & softer)
+------------------------------------------------------ */
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.15); /* slightly more opaque than before */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: fadeInUp 0.5s ease both;
+}
+
+.upload-card {
+  padding: 30px 22px;
+}
+
+.preview-card {
+  padding: 22px;
+  align-items: center;
+}
+
+.result-card {
+  padding: 24px;
+  align-items: flex-start;
+}
+
+/* ------------------------------------------------------
+   5. Headings & Typography
+------------------------------------------------------ */
+h1 {
+  font-size: 2.6rem;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #2d2d2d; /* darker text for better contrast on light background */
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.4);
+}
+
+h2, h3 {
+  font-size: 1.5rem;
+  letter-spacing: 0.4px;
+  color: #3a3a3a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+/* Form paragraphs (Django’s {{ form.as_p }}) */
+.upload-card p {
+  margin-bottom: 14px;
+  line-height: 1.45;
+  color: #2e2e2e;
+}
+
+/* Labels */
+.upload-card label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #2e2e2e;
+}
+
+.score_read {
+  color: #2e2e2e;
+}
+
+/* ------------------------------------------------------
+   6. File Input Styling
+------------------------------------------------------ */
+.upload-card input[type="file"] {
+  width: 100%;
+  padding: 7px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #2e2e2e;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.upload-card input[type="file"]::file-selector-button {
+  background: #d6c2f0; /* gentle lavender */
+  border: none;
+  padding: 7px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #2e2e2e;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+.upload-card input[type="file"]::file-selector-button:hover {
+  background: #c3addd; /* slightly deeper lavender on hover */
+}
+
+/* ------------------------------------------------------
+   7. Buttons (Soft Pastel Accent)
+------------------------------------------------------ */
+.btn {
+  align-self: flex-end;
+  background: linear-gradient(
+    130deg,
+    #b3e5fc,  /* pastel sky blue */
+    #ffe0b2   /* pastel peach */
+  );
+  border: none;
+  color: #2e2e2e;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+.btn:hover {
+  background: #d7f1ff; /* light sky blue on hover */
+  transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------
+   8. Video Elements
+------------------------------------------------------ */
+#preview-container video,
+.video-player {
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Server‐returned video wrapper */
+.server-video-container {
+  margin-top: 18px;
+}
+.server-video-container h3 {
+  margin-bottom: 6px;
+  font-size: 1.25rem;
+  letter-spacing: 0.4px;
+  color: #3a3a3a;
+}
+
+/* ------------------------------------------------------
+   9. Loading Overlay + Spinner (Lighter Look)
+------------------------------------------------------ */
+#loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85); /* mostly white but semi‐transparent */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+#loading-overlay.visible {
+  display: flex;
+}
+
+/* Spinner: a lighter gray ring */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 7px solid rgba(100, 100, 100, 0.25);
+  border-top: 7px solid rgba(100, 100, 100, 0.7);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ------------------------------------------------------
+   10. Utility Classes + Animations
+------------------------------------------------------ */
+/* Hide an element */
+.hidden {
+  display: none !important;
+}
+
+/* Fade‐in + upward movement for cards */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

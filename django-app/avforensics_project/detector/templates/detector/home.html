@@ -35,7 +35,7 @@
       <!-- Result block: only shown after server returns `result` in context -->
       {% if result %}
       <div class="card result-card">
-        <h2>Result: {{ result }}</h2>
+        <h2>Result: {{ result|safe }}</h2>
         <p class="score_read">Score: {{ score }}</p>
 
 

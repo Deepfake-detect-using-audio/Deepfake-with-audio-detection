@@ -43,6 +43,15 @@ def prepocess_video(videofile, opts, resize, reference):
     #video = np.transpose(im,(0,3,4,1,2))
     video = __load_video__(video, resize=resize)
     aud_path = os.path.join(opts.tmp_dir,reference,'audio.wav')
+    # print("after video path is loaded")
+
+    if os.path.getsize(aud_path) == 0:
+        # clean up, then bail out with a flag
+        # return {'status': 'no_audio'}
+        return {'score': 'no_audio'}
+
+
+
     audio = load_wav(aud_path).astype('float32')
     vid_time_len = video.shape[1]
     fps = opts.fps  # TODO: get as param?

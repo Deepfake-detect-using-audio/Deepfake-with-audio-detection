@@ -35,6 +35,7 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset
 from loguru import logger
 from tqdm.contrib.logging import logging_redirect_tqdm
+#from moviepy.editor import VideoFileClip
 
 opts = load_opts()
 device = opts.device
@@ -266,6 +267,7 @@ def test2(dist_model, avfeature_model, loader, dist_reg_model, avfeature_reg_mod
 
 def main():
     fake_distribution = np.zeros(31)
+    print(opts.test_video_path) #Test
     vis_enc, _ = select_backbone(network='r18')
     aud_enc = AudioEncoder()
     #lrs2_distribution = np.zeros(31)

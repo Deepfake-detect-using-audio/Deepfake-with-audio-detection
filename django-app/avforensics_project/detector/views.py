@@ -92,8 +92,12 @@ def home(request):
             # Call your metadata check, passing in the saved file path
             exception_occured, make_flag = make_check(file_path)
             # Determine the label
+            # if score == "no_audio":
+            #     result = "No audio found!!"
+
             if score is None:
-                result = "Could not compute"
+                result = "Could not compute!\nPlease upload a video file that contains an audio track."
+                result = result.replace('\n', '<br>')
             else:
                 if exception_occured == 0:
                     if make_flag == 1 and score < 50:
